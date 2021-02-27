@@ -94,7 +94,10 @@ namespace Froggies
 
             // Selected Units
             unitGrid = GetComponent<UIDocument>().rootVisualElement.Q("UnitGrid");
-            selectedQuery = entityManager.CreateEntityQuery(ComponentType.ReadWrite<SelectedTag>());
+
+            // unit selection, excluding enemies
+            selectedQuery = entityManager.CreateEntityQuery(ComponentType.ReadWrite<SelectedTag>(), ComponentType.Exclude<EnemyTag>());
+
             selectionSystem = world[0].GetExistingSystem<SelectionSystem>();
 
             // Action Buttons
@@ -144,6 +147,16 @@ namespace Froggies
 
         public override void FreeBehaviour()
         {
+        }
+
+        public void Hide()
+        {
+            rootVisualElement.style.display = DisplayStyle.None;
+        }
+
+        public void Show()
+        {
+            rootVisualElement.style.display = DisplayStyle.Flex;
         }
 
 
